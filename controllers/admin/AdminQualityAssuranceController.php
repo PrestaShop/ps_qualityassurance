@@ -5,7 +5,9 @@ class AdminQualityAssuranceController extends ModuleAdminController
     public function __construct()
     {
         parent::__construct();
+        $this->bootstrap = true;
         $this->controller_quick_name = 'module';
+
         if ($this->ajax) {
             $this->display_header = false;
             $this->display_header_javascript = false;
