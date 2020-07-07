@@ -28,8 +28,7 @@ if (file_exists($autoloadPath)) {
 
 class Ps_Qualityassurance extends Module
 {
-    public $jsPath;
-    public $cssPath;
+    public $assetsPath;
 
     public $tabs = [
         [

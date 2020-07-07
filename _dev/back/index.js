@@ -26,5 +26,10 @@ Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
 new Vue({
   router,
-  render: h => h(App),
-}).$mount('#ps-quality-assurance');
+  el: '#ps-quality-assurance',
+  template: '<app />',
+  components: {App},
+  data: {
+    hooks: window.qualityAssuranceHooks,
+  },
+});

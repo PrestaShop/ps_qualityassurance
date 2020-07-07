@@ -27,6 +27,9 @@ class AdminQualityAssuranceController extends ModuleAdminController
         $this->context->smarty->assign([
             'pathApp' => $this->module->assetsPath . 'back.js?v=' . mt_rand(),
         ]);
+        Media::addJsDef([
+            'qualityAssuranceHooks' => Hook::getHooks(),
+        ]);
 
         $this->createTemplate('views/admin/index.tpl');
         $content = $this->context->smarty->fetch($this->getTemplatePath() . 'index.tpl');
