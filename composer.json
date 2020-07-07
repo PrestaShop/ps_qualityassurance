@@ -1,0 +1,26 @@
+{
+    "config": {
+        "preferred-install": "dist",
+        "platform": {
+            "php": "5.6"
+        },
+        "classmap-authoritative": true,
+        "optimize-autoloader": true,
+        "prepend-autoloader": false
+    },
+    "require-dev": {
+        "php": ">=5.6",
+        "prestashop/php-dev-tools": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "PrestaShop\\Module\\QualityAssurance\\": "src/"
+        },
+        "classmap": [
+            "ps_qualityassurance.php",
+            "controllers/"
+        ]
+    },
+    "author": "PrestaShop",
+    "license": "AFL-3.0"
+}
