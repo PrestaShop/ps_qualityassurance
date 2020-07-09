@@ -14,6 +14,14 @@
             id="hook-name"
             v-model="form.name"
           >
+          <vue-suggestion
+            :items="items"
+            v-model="form.name"
+            :set-label="getLabel"
+            :item-template="suggestion"
+            @changed="inputChange"
+            @selected="selectedItem"
+          />
         </div>
 
         <div class="form-group">
@@ -37,17 +45,41 @@
 </template>
 
 <script>
+  import {createNamespacedHelpers} from 'vuex';
+  import {VueSuggestion} from 'vue-suggestion';
+  import Suggestion from './Suggestion';
+
+  const {mapGetters} = createNamespacedHelpers('hooks');
+
   export default {
     name: 'HookRegister',
+    components: {
+      VueSuggestion,
+    },
     data() {
       return {
         form: {
           content: '',
           name: '',
         },
+        suggestion: Suggestion,
       };
     },
-    method: {
+    computed: {
+      ...mapGetters({
+        items: 'data',
+      }),
+    },
+    methods: {
+      selectedItem(item) {
+        this.form.name = item.name;
+      },
+      getLabel(item) {
+        return item.name;
+      },
+      inputChange(text) {
+        this.$store.dispatch('hooks/search', text);
+      },
       registerHook() {
 
       },

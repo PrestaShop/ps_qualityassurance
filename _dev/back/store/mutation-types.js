@@ -1,0 +1,2 @@
+export const HOOKS_DATA = 'HOOKS_DATA';
+export const HOOKS_ORIGINAL_DATA = 'HOOKS_ORIGINAL_DATA';

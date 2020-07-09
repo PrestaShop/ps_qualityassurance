@@ -19,15 +19,20 @@
 import './index.scss';
 
 import Vue from 'vue';
+import VueSuggestion from 'vue-suggestion';
 import router from './router';
+import store from './store';
 import App from './App';
+
+Vue.use(VueSuggestion);
 
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
 new Vue({
   router,
+  store,
   el: '#ps-quality-assurance',
-  template: '<app />',
+  template: '<app :hooks=hooks />',
   components: {App},
   data: {
     hooks: window.qualityAssuranceHooks,
