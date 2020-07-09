@@ -32,9 +32,6 @@ new Vue({
   router,
   store,
   el: '#ps-quality-assurance',
-  template: '<app :hooks=hooks />',
+  template: '<app />',
   components: {App},
-  data: {
-    hooks: window.qualityAssuranceHooks,
-  },
 });

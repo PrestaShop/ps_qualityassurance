@@ -1,4 +1,5 @@
 /* eslint-disable no-shadow, no-param-reassign */
+import api from '@/lib/api';
 import * as types from './mutation-types';
 
 const state = () => ({
@@ -7,15 +8,18 @@ const state = () => ({
 });
 
 const actions = {
-  data({commit}, hooks) {
-    commit(types.HOOKS_DATA, hooks);
-    commit(types.HOOKS_ORIGINAL_DATA, hooks);
-  },
   search({commit, state}, text) {
     commit(
       types.HOOKS_DATA,
       state.originalData.filter(item => item.name.toLowerCase().includes(text.toLowerCase())),
     );
+  },
+  async getAll({commit}) {
+    await api.getHooks().then((res) => {
+      commit(types.HOOKS_ORIGINAL_DATA, res.data);
+    }).catch((res) => {
+      console.log(res);
+    });
   },
 };
 

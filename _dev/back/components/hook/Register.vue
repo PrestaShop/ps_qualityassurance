@@ -7,16 +7,8 @@
             Hook name
           </label>
 
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Hook name"
-            id="hook-name"
-            v-model="form.name"
-          >
           <vue-suggestion
             :items="items"
-            v-model="form.name"
             :set-label="getLabel"
             :item-template="suggestion"
             @changed="inputChange"
@@ -45,6 +37,7 @@
 </template>
 
 <script>
+  import api from '@/lib/api';
   import {createNamespacedHelpers} from 'vuex';
   import {VueSuggestion} from 'vue-suggestion';
   import Suggestion from './Suggestion';
@@ -78,10 +71,13 @@
         return item.name;
       },
       inputChange(text) {
+        this.form.name = text;
         this.$store.dispatch('hooks/search', text);
       },
       registerHook() {
-
+        api.registerHook(this.form).then(() => {
+          this.$store.dispatch('hooks/getAll');
+        });
       },
     },
   };
