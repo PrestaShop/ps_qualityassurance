@@ -1,6 +1,8 @@
 <template>
   <div class="row">
     <div class="col-lg-12">
+      <alert type="danger" :message="message" v-if="message" />
+
       <div class="form">
         <div class="form-group">
           <label class="form-control-label" for="hook-name">
@@ -38,6 +40,7 @@
 
 <script>
   import api from '@/lib/api';
+  import Alert from '@/components/Alert';
   import {createNamespacedHelpers} from 'vuex';
   import {VueSuggestion} from 'vue-suggestion';
   import Suggestion from './Suggestion';
@@ -47,10 +50,12 @@
   export default {
     name: 'HookRegister',
     components: {
+      Alert,
       VueSuggestion,
     },
     data() {
       return {
+        message: null,
         form: {
           content: '',
           name: '',
@@ -75,8 +80,15 @@
         this.$store.dispatch('hooks/search', text);
       },
       registerHook() {
-        api.registerHook(this.form).then(() => {
-          this.$store.dispatch('hooks/getAll');
+        this.message = null;
+        api.registerHook(this.form).then((res) => {
+          if (res.data.error) {
+            this.message = res.data.error;
+          } else {
+            this.form.name = '';
+            this.form.content = '';
+            this.$store.dispatch('hooks/getAll');
+          }
         });
       },
     },

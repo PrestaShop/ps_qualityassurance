@@ -48,8 +48,8 @@ class AdminQualityAssuranceController extends ModuleAdminController
     public function ajaxProcessRegisterHook()
     {
         $hookName = (string) Tools::getValue('name');
-        if (empty($hookName)) {
-            $this->renderJson([]);
+        if (empty($hookName) or !Validate::isHookName($hookName)) {
+            $this->renderJson(['error' => 'Invalid hook name']);
         }
 
         $query = new DbQuery();
