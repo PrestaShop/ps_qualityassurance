@@ -60,6 +60,9 @@ const api = {
   getHooks() {
     return makeGetRequest(urls.hooks);
   },
+  getRegisteredHooks() {
+    return makeGetRequest(urls.registeredHooks);
+  },
 };
 
 export default api;

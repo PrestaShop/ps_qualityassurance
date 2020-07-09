@@ -32,6 +32,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
                 'urls' => [
                     'register' => $this->generateAjaxUrl('RegisterHook'),
                     'hooks' => $this->generateAjaxUrl('GetHooks'),
+                    'registeredHooks' => $this->generateAjaxUrl('GetRegisteredHooks'),
                 ],
             ],
         ]);
@@ -62,7 +63,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
             Db::getInstance()->update(
                 'quality_assurance_hooks',
                 [
-                    'name' => pSQL($hookName),
+
                     'content' => pSQL(Tools::getValue('content')),
                 ],
                 'id = ' . (int) $row['id']
@@ -84,6 +85,14 @@ class AdminQualityAssuranceController extends ModuleAdminController
     public function ajaxProcessGetHooks()
     {
         $this->renderJson(Hook::getHooks());
+    }
+
+    public function ajaxProcessGetRegisteredHooks()
+    {
+        $query = new DbQuery();
+        $query->select('*');
+        $query->from('quality_assurance_hooks');
+        $this->renderJson(Db::getInstance()->executeS($query));
     }
 
     private function generateAjaxUrl($action)
