@@ -30,7 +30,7 @@
             >
               <slot name="header">
                 <h5 class="modal-title" id="exampleModalLabel">{{ title }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" @click.prevent="close()" aria-label="Close">
                   <span aria-hidden="true">×</span>
                 </button>
               </slot>
