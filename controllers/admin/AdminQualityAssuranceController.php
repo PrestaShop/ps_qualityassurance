@@ -33,6 +33,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
                     'register' => $this->generateAjaxUrl('RegisterHook'),
                     'hooks' => $this->generateAjaxUrl('GetHooks'),
                     'registeredHooks' => $this->generateAjaxUrl('GetRegisteredHooks'),
+                    'delete' => $this->generateAjaxUrl('DeleteHook'),
                 ],
             ],
         ]);
@@ -93,6 +94,23 @@ class AdminQualityAssuranceController extends ModuleAdminController
         $query->select('*');
         $query->from('quality_assurance_hooks');
         $this->renderJson(Db::getInstance()->executeS($query));
+    }
+
+    public function ajaxProcessDeleteHook()
+    {
+        $hookId = (int) Tools::getValue('hookId');
+
+        $query = new DbQuery();
+        $query->select('name');
+        $query->from('quality_assurance_hooks');
+        $query->where('id = ' . $hookId);
+        $row = Db::getInstance()->getRow($query);
+        if (empty($row)) {
+            $this->renderJson(['error' => 'Hook not found']);
+        }
+
+        $this->module->unregisterHook($row['name']);
+        $this->renderJson(Db::getInstance()->delete('quality_assurance_hooks', 'id = ' . $hookId));
     }
 
     private function generateAjaxUrl($action)

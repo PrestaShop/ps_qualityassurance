@@ -57,6 +57,9 @@ const api = {
   registerHook(postData) {
     return makePostRequest(urls.register, postData);
   },
+  deleteHook(hookId) {
+    return makePostRequest(urls.delete, {hookId});
+  },
   getHooks() {
     return makeGetRequest(urls.hooks);
   },
