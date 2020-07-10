@@ -19,6 +19,7 @@
 import './index.scss';
 
 import Vue from 'vue';
+import './directives';
 import VueSuggestion from 'vue-suggestion';
 import router from './router';
 import store from './store';

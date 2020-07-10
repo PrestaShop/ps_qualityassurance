@@ -19,7 +19,7 @@
               <button
                 type="button"
                 class="btn btn-primary btn-sm"
-                @click.prevent="viewHook(hook.id)"
+                @click.prevent.stop="viewHook(hook)"
               >
                 View
               </button>
@@ -35,22 +35,50 @@
         </tr>
       </tbody>
     </table>
+
+    <modal
+      v-if="isModalVisible"
+      @close="closeModal"
+      @confirm="confirmUpdate"
+      :title="selectedHook.name"
+      confirmation
+    >
+      <template slot="body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form">
+              <div class="form-group">
+                <label class="form-control-label" for="hook-content">
+                  Content
+                </label>
+
+                <textarea class="form-control" id="hook-content" v-model="selectedHook.content" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </modal>
   </div>
 </template>
 
 <script>
   import api from '@/lib/api';
   import Alert from '@/components/Alert';
+  import Modal from '@/components/Modal';
 
   export default {
     name: 'View',
     components: {
       Alert,
+      Modal,
     },
     data() {
       return {
         hooks: [],
         message: null,
+        isModalVisible: false,
+        selectedHook: {},
       };
     },
     mounted() {
@@ -71,6 +99,24 @@
             this.refreshHooks();
           }
         });
+      },
+      confirmUpdate() {
+        api.updateHook(
+          {
+            hookId: this.selectedHook.id,
+            content: this.selectedHook.content,
+          },
+        ).then(() => {
+          this.closeModal();
+        });
+      },
+      closeModal() {
+        this.isModalVisible = false;
+      },
+      viewHook(hook) {
+        this.selectedHook = hook;
+        console.log(this.selectedHook.name);
+        this.isModalVisible = true;
       },
     },
   };

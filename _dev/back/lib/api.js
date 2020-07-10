@@ -60,6 +60,9 @@ const api = {
   deleteHook(hookId) {
     return makePostRequest(urls.delete, {hookId});
   },
+  updateHook(postData) {
+    return makePostRequest(urls.update, postData);
+  },
   getHooks() {
     return makeGetRequest(urls.hooks);
   },

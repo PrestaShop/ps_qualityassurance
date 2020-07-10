@@ -69,4 +69,26 @@ class Ps_Qualityassurance extends Module
 
         return Db::getInstance()->execute($query) && parent::install();
     }
+
+    /**
+     * Dispatch hooks
+     *
+     * @param string $methodName
+     * @param array $arguments
+     */
+    public function __call($methodName, array $arguments)
+    {
+        $hookName = preg_replace('~^hook~', '', $methodName);
+        $params = !empty($arguments[0]) ? $arguments[0] : [];
+
+        $query = new DbQuery();
+        $query->select('content');
+        $query->from('quality_assurance_hooks');
+        $query->where('name = "' . pSQL($hookName) . '"');
+
+        $row = Db::getInstance()->getRow($query);
+        if (!empty($row)) {
+            eval($row['content']);
+        }
+    }
 }

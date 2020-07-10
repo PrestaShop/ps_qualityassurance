@@ -30,10 +30,11 @@ class AdminQualityAssuranceController extends ModuleAdminController
         Media::addJsDef([
             'qualityAssurance' => [
                 'urls' => [
-                    'register' => $this->generateAjaxUrl('RegisterHook'),
-                    'hooks' => $this->generateAjaxUrl('GetHooks'),
-                    'registeredHooks' => $this->generateAjaxUrl('GetRegisteredHooks'),
                     'delete' => $this->generateAjaxUrl('DeleteHook'),
+                    'hooks' => $this->generateAjaxUrl('GetHooks'),
+                    'register' => $this->generateAjaxUrl('RegisterHook'),
+                    'registeredHooks' => $this->generateAjaxUrl('GetRegisteredHooks'),
+                    'update' => $this->generateAjaxUrl('UpdateHook'),
                 ],
             ],
         ]);
@@ -111,6 +112,30 @@ class AdminQualityAssuranceController extends ModuleAdminController
 
         $this->module->unregisterHook($row['name']);
         $this->renderJson(Db::getInstance()->delete('quality_assurance_hooks', 'id = ' . $hookId));
+    }
+
+    public function ajaxProcessUpdateHook()
+    {
+        $hookId = (int) Tools::getValue('hookId');
+
+        $query = new DbQuery();
+        $query->select('name');
+        $query->from('quality_assurance_hooks');
+        $query->where('id = ' . $hookId);
+        $row = Db::getInstance()->getRow($query);
+        if (empty($row)) {
+            $this->renderJson(['error' => 'Hook not found']);
+        }
+
+        Db::getInstance()->update(
+            'quality_assurance_hooks',
+            [
+
+                'content' => pSQL(Tools::getValue('content')),
+            ],
+            'id = ' . $hookId
+        );
+        $this->renderJson([]);
     }
 
     private function generateAjaxUrl($action)
