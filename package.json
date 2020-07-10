@@ -49,5 +49,7 @@
     "presets": [
       "@babel/preset-env"
     ]
-  }
+  },
+  "author": "PrestaShop",
+  "license": "AFL-3.0"
 }
