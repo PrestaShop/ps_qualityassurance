@@ -1,0 +1,13 @@
+parameters:
+  reportUnmatchedIgnoredErrors: false
+  bootstrap: /var/www/html/modules/ps_qualityassurance/tests/php/phpstan/bootstrap.php
+  paths:
+    - /var/www/html/modules/ps_qualityassurance/controllers
+    - /var/www/html/modules/ps_qualityassurance/ps_qualityassurance.php
+  ignoreErrors:
+    # module specific
+    - '~^Access to an undefined property Ps_Qualityassurance::\$ajax\.$~'
+    - '~^Access to an undefined property Module::\$assetsPath\.$~'
+    - '~^Property ControllerCore::\$display_footer \(string\) does not accept false\.$~'
+
+  level: 5

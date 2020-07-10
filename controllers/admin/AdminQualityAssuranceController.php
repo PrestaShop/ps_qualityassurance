@@ -23,7 +23,6 @@ class AdminQualityAssuranceController extends ModuleAdminController
     {
         parent::__construct();
         $this->bootstrap = true;
-        $this->controller_quick_name = 'module';
 
         if ($this->ajax) {
             $this->display_header_javascript = false;
@@ -32,13 +31,6 @@ class AdminQualityAssuranceController extends ModuleAdminController
         }
     }
 
-    /**
-     * Initialize the content by adding Boostrap and loading the TPL
-     *
-     * @param none
-     *
-     * @return none
-     */
     public function initContent()
     {
         parent::initContent();
