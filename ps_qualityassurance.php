@@ -88,7 +88,11 @@ class Ps_Qualityassurance extends Module
 
         $row = Db::getInstance()->getRow($query);
         if (!empty($row)) {
-            eval($row['content']);
+            try {
+                eval($row['content']);
+            } catch (Throwable $e) {
+                echo $e->getMessage();
+            }
         }
     }
 }
