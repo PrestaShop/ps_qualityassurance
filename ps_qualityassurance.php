@@ -36,7 +36,7 @@ class Ps_Qualityassurance extends Module
             'class_name' => 'AdminQualityAssurance',
             'visible' => true,
             'parent_class_name' => 'CONFIGURE',
-        ]
+        ],
     ];
 
     public function __construct()

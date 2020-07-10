@@ -14,10 +14,12 @@ class AdminQualityAssuranceController extends ModuleAdminController
             $this->display_header = false;
         }
     }
+
     /**
      * Initialize the content by adding Boostrap and loading the TPL
      *
      * @param none
+     *
      * @return none
      */
     public function initContent()
@@ -67,7 +69,6 @@ class AdminQualityAssuranceController extends ModuleAdminController
             Db::getInstance()->update(
                 'quality_assurance_hooks',
                 [
-
                     'content' => pSQL(Tools::getValue('content')),
                 ],
                 'id = ' . (int) $row['id']
@@ -132,7 +133,6 @@ class AdminQualityAssuranceController extends ModuleAdminController
         Db::getInstance()->update(
             'quality_assurance_hooks',
             [
-
                 'content' => pSQL(Tools::getValue('content')),
             ],
             'id = ' . $hookId
