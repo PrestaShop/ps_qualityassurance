@@ -43,6 +43,7 @@ Vue.use(
 
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
+// eslint-disable-next-line no-new
 new Vue({
   router,
   store,

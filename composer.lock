@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f8c034a599bb28a5e050bad72fbfa1af",
+    "content-hash": "4a7b491487104cd6f02e40fb8f88f9dc",
     "packages": [],
     "packages-dev": [
         {
@@ -547,45 +547,6 @@
             "description": "Rewrite your file headers to add the license or to make them up-to-date",
             "homepage": "https://github.com/PrestaShopCorp/header-stamp",
             "time": "2020-07-09T13:10:39+00:00"
-        },
-        {
-            "name": "prestashop/php-coding-standards",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PrestaShop/php-dev-tools.git",
-                "reference": "892f85cfd8028776d520e444a6fc41f56f2d0a20"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PrestaShop/php-dev-tools/zipball/892f85cfd8028776d520e444a6fc41f56f2d0a20",
-                "reference": "892f85cfd8028776d520e444a6fc41f56f2d0a20",
-                "shasum": ""
-            },
-            "require": {
-                "friendsofphp/php-cs-fixer": "^2.14",
-                "php": ">=5.6.0",
-                "prestashop/header-stamp": "^1.0",
-                "squizlabs/php_codesniffer": "^3.4",
-                "symfony/console": "~3.2 || ~4.0",
-                "symfony/filesystem": "~3.2 || ~4.0"
-            },
-            "bin": [
-                "bin/prestashop-coding-standards"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PrestaShop\\CodingStandards\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "PrestaShop coding standards",
-            "abandoned": "prestashop/php-dev-tools",
-            "time": "2020-05-28T09:26:34+00:00"
         },
         {
             "name": "prestashop/php-dev-tools",
@@ -1579,9 +1540,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "prestashop/php-coding-standards": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
