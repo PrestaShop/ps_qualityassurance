@@ -23,7 +23,7 @@
             Content
           </label>
 
-          <textarea class="form-control" id="hook-content" v-model="form.content" />
+          <codemirror v-model="form.content" />
         </div>
 
         <button
@@ -43,6 +43,7 @@
   import Alert from '@/components/Alert';
   import {createNamespacedHelpers} from 'vuex';
   import {VueSuggestion} from 'vue-suggestion';
+  import {codemirror} from 'vue-codemirror';
   import Suggestion from './Suggestion';
 
   const {mapGetters} = createNamespacedHelpers('hooks');
@@ -52,6 +53,7 @@
     components: {
       Alert,
       VueSuggestion,
+      codemirror,
     },
     data() {
       return {

@@ -52,7 +52,7 @@
                   Content
                 </label>
 
-                <textarea class="form-control" id="hook-content" v-model="selectedHook.content" />
+                <codemirror v-model="selectedHook.content" />
               </div>
             </div>
           </div>
@@ -66,12 +66,14 @@
   import api from '@/lib/api';
   import Alert from '@/components/Alert';
   import Modal from '@/components/Modal';
+  import {codemirror} from 'vue-codemirror';
 
   export default {
     name: 'View',
     components: {
       Alert,
       Modal,
+      codemirror,
     },
     data() {
       return {

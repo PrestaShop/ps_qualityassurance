@@ -27,6 +27,8 @@ class AdminQualityAssuranceController extends ModuleAdminController
         $this->context->smarty->assign([
             'pathApp' => $this->module->assetsPath . 'back.js?v=' . mt_rand(),
         ]);
+        $this->addCss($this->module->assetsPath . 'back.css');
+
         Media::addJsDef([
             'qualityAssurance' => [
                 'urls' => [

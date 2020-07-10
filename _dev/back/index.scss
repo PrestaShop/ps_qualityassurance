@@ -16,5 +16,10 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  */
-.bootstrap {
+
+@import '../../node_modules/codemirror/lib/codemirror.css';
+@import '../../node_modules/codemirror/theme/eclipse.css';
+
+.modal-backdrop {
+  opacity: 0.5;
 }

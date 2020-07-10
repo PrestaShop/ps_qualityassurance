@@ -21,11 +21,25 @@ import './index.scss';
 import Vue from 'vue';
 import './directives';
 import VueSuggestion from 'vue-suggestion';
+import VueCodemirror from 'vue-codemirror';
+import 'codemirror/mode/php/php.js';
 import router from './router';
 import store from './store';
 import App from './App';
 
 Vue.use(VueSuggestion);
+Vue.use(
+  VueCodemirror,
+  {
+    options: {
+      mode: 'text/x-php',
+      theme: 'eclipse',
+      lineNumbers: true,
+      styleActiveLine: true,
+      matchBrackets: true,
+    },
+  },
+);
 
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
