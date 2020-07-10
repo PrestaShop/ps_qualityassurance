@@ -20,6 +20,13 @@
 @import '../../node_modules/codemirror/lib/codemirror.css';
 @import '../../node_modules/codemirror/theme/eclipse.css';
 
+#ps-quality-assurance {
+  @import '~prestakit/dist/css/bootstrap-prestashop-ui-kit';
+  pre {
+    margin: auto;
+  }
+}
+
 .modal-backdrop {
   opacity: 0.5;
 }
