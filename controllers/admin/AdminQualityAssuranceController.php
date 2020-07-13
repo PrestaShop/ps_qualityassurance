@@ -78,7 +78,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
             Db::getInstance()->update(
                 'quality_assurance_hooks',
                 [
-                    'content' => pSQL(Tools::getValue('content')),
+                    'content' => pSQL(Tools::getValue('content'), true),
                 ],
                 'id = ' . (int) $row['id']
             );
@@ -87,7 +87,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
                 'quality_assurance_hooks',
                 [
                     'name' => pSQL($hookName),
-                    'content' => pSQL(Tools::getValue('content')),
+                    'content' => pSQL(Tools::getValue('content'), true),
                 ]
             );
             $this->module->registerHook($hookName);
@@ -142,7 +142,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
         Db::getInstance()->update(
             'quality_assurance_hooks',
             [
-                'content' => pSQL(Tools::getValue('content')),
+                'content' => pSQL(Tools::getValue('content'), true),
             ],
             'id = ' . $hookId
         );

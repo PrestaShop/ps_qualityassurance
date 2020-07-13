@@ -79,7 +79,7 @@ class Ps_Qualityassurance extends Module
     public function __call($methodName, array $arguments)
     {
         $hookName = preg_replace('~^hook~', '', $methodName);
-        $params = !empty($arguments[0]) ? $arguments[0] : [];
+
 
         $query = new DbQuery();
         $query->select('content');
@@ -88,8 +88,9 @@ class Ps_Qualityassurance extends Module
 
         $row = Db::getInstance()->getRow($query);
         if (!empty($row)) {
+            $params = !empty($arguments[0]) ? $arguments[0] : [];
             try {
-                eval($row['content']);
+                return eval($row['content']);
             } catch (Throwable $e) {
                 echo $e->getMessage();
             }
