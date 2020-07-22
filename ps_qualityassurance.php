@@ -80,7 +80,6 @@ class Ps_Qualityassurance extends Module
     {
         $hookName = preg_replace('~^hook~', '', $methodName);
 
-
         $query = new DbQuery();
         $query->select('content');
         $query->from('quality_assurance_hooks');
