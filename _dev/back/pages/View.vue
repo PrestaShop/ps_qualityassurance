@@ -25,7 +25,8 @@
         <tr>
           <th>#</th>
           <th>Name</th>
-          <th>Action</th>
+          <th class="text-center">Action</th>
+          <th class="text-center">Status</th>
         </tr>
       </thead>
       <tbody>
@@ -49,6 +50,25 @@
                 Delete
               </button>
             </div>
+          </td>
+          <td class="text-center">
+            <button
+              type="button"
+              class="btn btn-link"
+              :class="{'text-danger': !isEnabled(hook), 'text-success': isEnabled(hook)}"
+              @click.prevent="toogleHookStatus(hook.id)"
+            >
+              <i
+                class="material-icons"
+              >
+                <template v-if="isEnabled(hook)">
+                  check
+                </template>
+                <template v-else>
+                  clear
+                </template>
+              </i>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -130,12 +150,21 @@
           this.closeModal();
         });
       },
+      toogleHookStatus(hookId) {
+        api.toogleHookStatus(hookId).then(() => {
+          this.refreshHooks();
+        });
+      },
       closeModal() {
         this.isModalVisible = false;
       },
       viewHook(hook) {
         this.selectedHook = hook;
         this.isModalVisible = true;
+      },
+      isEnabled(hook) {
+        const enabled = parseInt(hook.enabled, 10);
+        return enabled === 1;
       },
     },
   };

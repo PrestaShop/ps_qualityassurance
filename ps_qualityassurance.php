@@ -63,6 +63,7 @@ class Ps_Qualityassurance extends Module
             '`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,' .
             '`name` varchar(255) NOT NULL,' .
             '`content` text NOT NULL,' .
+            '`enabled` BOOLEAN NOT NULL DEFAULT TRUE,' .
             'PRIMARY KEY (`id`),' .
             'UNIQUE KEY `name` (`name`)' .
             ') ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=UTF8;';
@@ -81,12 +82,13 @@ class Ps_Qualityassurance extends Module
         $hookName = preg_replace('~^hook~', '', $methodName);
 
         $query = new DbQuery();
-        $query->select('content');
+        $query->select('content')
+              ->select('enabled');
         $query->from('quality_assurance_hooks');
         $query->where('name = "' . pSQL($hookName) . '"');
 
         $row = Db::getInstance()->getRow($query);
-        if (!empty($row)) {
+        if (!empty($row['enabled'])) {
             $params = !empty($arguments[0]) ? $arguments[0] : [];
             try {
                 return eval($row['content']);

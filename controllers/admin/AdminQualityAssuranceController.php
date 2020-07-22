@@ -48,6 +48,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
                     'register' => $this->generateAjaxUrl('RegisterHook'),
                     'registeredHooks' => $this->generateAjaxUrl('GetRegisteredHooks'),
                     'update' => $this->generateAjaxUrl('UpdateHook'),
+                    'toogleHookStatus' => $this->generateAjaxUrl('ToogleHookStatus'),
                 ],
             ],
         ]);
@@ -143,6 +144,29 @@ class AdminQualityAssuranceController extends ModuleAdminController
             'quality_assurance_hooks',
             [
                 'content' => pSQL(Tools::getValue('content'), true),
+            ],
+            'id = ' . $hookId
+        );
+        $this->renderJson([]);
+    }
+
+    public function ajaxProcessToogleHookStatus()
+    {
+        $hookId = (int) Tools::getValue('hookId');
+
+        $query = new DbQuery();
+        $query->select('enabled');
+        $query->from('quality_assurance_hooks');
+        $query->where('id = ' . $hookId);
+        $row = Db::getInstance()->getRow($query);
+        if (empty($row)) {
+            $this->renderJson(['error' => 'Hook not found']);
+        }
+
+        Db::getInstance()->update(
+            'quality_assurance_hooks',
+            [
+                'enabled' => !$row['enabled'],
             ],
             'id = ' . $hookId
         );
