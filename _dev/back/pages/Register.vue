@@ -22,6 +22,7 @@
       <i class="icon-cogs" />
       Register hook
     </h3>
+
     <hook-register />
   </div>
 </template>

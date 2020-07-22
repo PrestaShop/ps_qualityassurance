@@ -30,7 +30,7 @@ function handler(e) {
 
 function addListener(node, callback) {
   if (!binded.length) {
-    document.addEventListener('click', handler, false);
+    document.addEventListener('mousedown', handler, false);
   }
 
   binded.push({node, callback});
@@ -49,7 +49,7 @@ function removeListener(node, callback) {
     return el.callback !== callback;
   });
   if (!binded.length) {
-    document.removeEventListener('click', handler, false);
+    document.removeEventListener('mousedown', handler, false);
   }
 }
 

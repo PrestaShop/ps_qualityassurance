@@ -135,7 +135,6 @@
       },
       viewHook(hook) {
         this.selectedHook = hook;
-        console.log(this.selectedHook.name);
         this.isModalVisible = true;
       },
     },

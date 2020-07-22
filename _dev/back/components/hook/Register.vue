@@ -19,7 +19,7 @@
 <template>
   <div class="row">
     <div class="col-lg-12">
-      <alert type="danger" :message="message" v-if="message" />
+      <alert :type="messageType" :message="message" v-if="message" />
 
       <div class="form">
         <div class="form-group">
@@ -76,6 +76,7 @@
     data() {
       return {
         message: null,
+        messageType: '',
         form: {
           content: '',
           name: '',
@@ -91,6 +92,15 @@
     methods: {
       selectedItem(item) {
         this.form.name = item.name;
+        if (this.form.content !== '') {
+          return;
+        }
+
+        if (item.name.startsWith('display')) {
+          this.form.content = 'return \'<img src="\' . Tools::getAdminImageUrl(\'prestashop-avatar.png\') . \'" />\';';
+        } else if (item.name.startsWith('action')) {
+          this.form.content = 'dump($params);';
+        }
       },
       getLabel(item) {
         return item.name;
@@ -104,7 +114,10 @@
         api.registerHook(this.form).then((res) => {
           if (res.data.error) {
             this.message = res.data.error;
+            this.messageType = 'danger';
           } else {
+            this.message = 'Successfuly saved!';
+            this.messageType = 'success';
             this.form.name = '';
             this.form.content = '';
             this.$store.dispatch('hooks/getAll');

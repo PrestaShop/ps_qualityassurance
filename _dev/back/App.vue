@@ -21,21 +21,20 @@
     <ul class="nav nav-tabs" role="tablist">
       <li class="nav-item">
         <router-link
-          to="/register"
-          class="nav-link"
-          active-class="active"
-        >
-          Register hook
-        </router-link>
-      </li>
-
-      <li class="nav-item">
-        <router-link
           to="/view"
           class="nav-link"
           active-class="active"
         >
           View registered hooks
+        </router-link>
+      </li>
+      <li class="nav-item">
+        <router-link
+          to="/register"
+          class="nav-link"
+          active-class="active"
+        >
+          Register hook
         </router-link>
       </li>
     </ul>

@@ -17,7 +17,9 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  *-->
 <template>
-  <div class="panel" />
+  <div class="panel">
+    Welcome to the Quality Assurance module
+  </div>
 </template>
 
 <script>
