@@ -5,10 +5,19 @@
 [![Total Downloads](https://poser.pugx.org/PrestaShop/ps_qualityassurance/downloads)](//packagist.org/packages/PrestaShop/ps_qualityassurance)
 [![GitHub license](https://img.shields.io/github/license/PrestaShop/ps_qualityassurance)](https://github.com/PrestaShop/ps_qualityassurance/LICENSE.md)
 
-
 ## About
 
-Helps QA team to test hooks.
+This module was desiged to helps QA team to test hooks.
+
+It provides a dedicated BO page where you can register to any hook inside PrestaShop and control what is being returned through this hook.
+
+### How to use it
+
+Install it, then use the new link in the menu "Quality Assurance" to reach the main configuration page.
+
+From this page, you can
+- see configured hooks
+- register new hooks
 
 ## Requirements
 
@@ -17,7 +26,9 @@ Required only for development:
 - npm
 - composer
 
-## Installation
+## Development tools
+
+### Installation
 
 Install all dependencies.
 ```
@@ -25,12 +36,18 @@ npm install
 composer install
 ```
 
-## Usage
+### Usage
 
 ```
 npm run dev # Watch js/css files for changes
 npm run build # Build for production
 ```
+
+### Build a ZIP
+
+If you want to install it into your shop by using standard module upload process, you need to build a ZIP archive.
+
+Install npm and composer dependencies, then build the JavaScript assets for production. Then remove the unnecessary Javascript node_modules from the root folder, and build a ZIP archive from the folder.
 
 ## Contributing
 
