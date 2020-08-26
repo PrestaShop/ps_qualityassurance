@@ -97,4 +97,10 @@ class Ps_Qualityassurance extends Module
             }
         }
     }
+
+    public function getContent()
+    {
+        $moduleAdminLink = Context::getContext()->link->getAdminLink('AdminQualityAssurance', true);
+        Tools::redirectAdmin($moduleAdminLink);
+    }
 }
