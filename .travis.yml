@@ -7,7 +7,7 @@ notifications:
 jobs:
   include:
     - stage: "JS"
-    - node_js: 9
+      node_js: 9
     - node_js: 10
     - node_js: 12
     - stage: "PHP"
