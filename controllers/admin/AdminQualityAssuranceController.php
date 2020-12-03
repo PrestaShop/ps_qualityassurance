@@ -182,6 +182,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
         $query->orderBy('id DESC');
         $query->limit(200);
 
+        /** @var array $logs */
         $logs = Db::getInstance()->executeS($query);
 
         $grouped = [];
