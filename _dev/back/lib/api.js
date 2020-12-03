@@ -63,8 +63,8 @@ const api = {
   updateHook(postData) {
     return makePostRequest(urls.update, postData);
   },
-  toogleHookStatus(hookId) {
-    return makePostRequest(urls.toogleHookStatus, {hookId});
+  toggleHookStatus(hookId) {
+    return makePostRequest(urls.toggleHookStatus, {hookId});
   },
   getHooks() {
     return makeGetRequest(urls.hooks);
