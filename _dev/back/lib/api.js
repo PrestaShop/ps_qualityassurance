@@ -74,7 +74,7 @@ const api = {
   },
   getHookCallLogs() {
     return makeGetRequest(urls.logs);
-  }
+  },
 };
 
 export default api;

@@ -24,19 +24,23 @@
  *-->
 <template>
   <div class="panel">
-    <table class="table table-striped" v-for="(logs, requestIdentifier) in logsGroupedByRequest" :key="requestIdentifier">
+    <table class="table table-striped"
+    v-for="(logs, requestIdentifier) in logsGroupedByRequest"
+    :key="requestIdentifier">
       <thead>
-      <tr>
-        <th>#</th>
-        <th>Hook</th>
-        <th>Parameters</th>
-        <th>Output</th>
-        <th>Time</th>
-        <th>Status</th>
-      </tr>
+        <tr>
+          <th>#</th>
+          <th>Hook</th>
+          <th>Parameters</th>
+          <th>Output</th>
+          <th>Time</th>
+          <th>Status</th>
+        </tr>
       </thead>
       <tbody>
-        <tr v-for="log in logs" :key="log.id" v-bind:class="{ 'table-danger': (log.error === '1') }">
+        <tr v-for="log in logs"
+        :key="log.id"
+        v-bind:class="{ 'table-danger': (log.error === '1') }">
           <th scope="row">{{ log.id }}</th>
           <td>{{ log.hook_name }}</td>
           <td>{{ log.hook_parameters }}</td>
