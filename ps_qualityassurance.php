@@ -67,7 +67,7 @@ class Ps_Qualityassurance extends Module
 
     public function install()
     {
-        $query = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'quality_assurance_hooks` (' .
+        $createHookTableQuery = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'quality_assurance_hooks` (' .
             '`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,' .
             '`name` varchar(255) NOT NULL,' .
             '`content` text NOT NULL,' .
@@ -76,7 +76,7 @@ class Ps_Qualityassurance extends Module
             'UNIQUE KEY `name` (`name`)' .
             ') ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=UTF8;';
 
-        $query2 = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'quality_assurance_hook_logs` (' .
+        $createHookLogsQuery = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'quality_assurance_hook_logs` (' .
             '`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,' .
             '`request_identifier` varchar(255) NOT NULL,' .
             '`hook_name` varchar(255) NOT NULL,' .
@@ -87,8 +87,8 @@ class Ps_Qualityassurance extends Module
             'PRIMARY KEY (`id`)' .
             ') ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=UTF8;';
 
-        return Db::getInstance()->execute($query1)
-            && Db::getInstance()->execute($query2)
+        return Db::getInstance()->execute($createHookTableQuery)
+            && Db::getInstance()->execute($createHookLogsQuery)
             && parent::install();
     }
 
@@ -101,8 +101,6 @@ class Ps_Qualityassurance extends Module
     public function __call($methodName, array $arguments)
     {
         $hookName = preg_replace('~^hook~', '', $methodName);
-
-        $arguments[4] = ['4' => ['5' => []]];
 
         $payload = $this->getRegisteredHookPayload($hookName);
 
@@ -158,7 +156,7 @@ class Ps_Qualityassurance extends Module
      *
      * @return bool
      */
-    protected function recordHookCall(string $hookName, array $arguments, ?string $output = null, ?bool $error = false)
+    protected function recordHookCall($hookName, array $arguments, $output = null, $error = false)
     {
         $requestIdentifier = $this->getRequestIdentifier();
 
@@ -206,7 +204,7 @@ class Ps_Qualityassurance extends Module
     protected function getRequestIdentifier()
     {
         if ($this->requestIdentifier === null) {
-            $this->requestIdentifier = random_bytes(20);
+            $this->requestIdentifier = uniqid();
         }
 
         return $this->requestIdentifier;
