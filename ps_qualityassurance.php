@@ -106,6 +106,7 @@ class Ps_Qualityassurance extends Module
 
         if (empty($payload['enabled'])) {
             $this->recordHookCall($hookName, $arguments);
+
             return;
         }
 
@@ -133,6 +134,7 @@ class Ps_Qualityassurance extends Module
      * Look whether there is a payload registered for this hook
      *
      * @param string $hookName
+     *
      * @return array|null
      */
     protected function getRegisteredHookPayload($hookName)
@@ -191,7 +193,7 @@ class Ps_Qualityassurance extends Module
             } elseif (is_object($value)) {
                 $result[$key] = sprintf('Object %s', get_class($value));
             } else {
-                $result[$key] = (string)$value;
+                $result[$key] = (string) $value;
             }
         }
 
