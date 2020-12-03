@@ -39,6 +39,14 @@ class Ps_Qualityassurance extends Module
         ],
     ];
 
+    /**
+     * A HTTP request identifier to be able to
+     * gather hook call logs that have been triggered by the same request
+     *
+     * @var string
+     */
+    protected $requestIdentifier;
+
     public function __construct()
     {
         $this->name = 'ps_qualityassurance';
@@ -68,7 +76,20 @@ class Ps_Qualityassurance extends Module
             'UNIQUE KEY `name` (`name`)' .
             ') ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=UTF8;';
 
-        return Db::getInstance()->execute($query) && parent::install();
+        $query2 = 'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'quality_assurance_hook_logs` (' .
+            '`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,' .
+            '`request_identifier` varchar(255) NOT NULL,' .
+            '`hook_name` varchar(255) NOT NULL,' .
+            '`hook_parameters` text NOT NULL,' .
+            '`output` text NOT NULL,' .
+            '`called_at` datetime NOT NULL,' .
+            '`error` TINYINT(1) NOT NULL,' .
+            'PRIMARY KEY (`id`)' .
+            ') ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=UTF8;';
+
+        return Db::getInstance()->execute($query1)
+            && Db::getInstance()->execute($query2)
+            && parent::install();
     }
 
     /**
@@ -81,20 +102,26 @@ class Ps_Qualityassurance extends Module
     {
         $hookName = preg_replace('~^hook~', '', $methodName);
 
-        $query = new DbQuery();
-        $query->select('content')
-              ->select('enabled');
-        $query->from('quality_assurance_hooks');
-        $query->where('name = "' . pSQL($hookName) . '"');
+        $arguments[4] = ['4' => ['5' => []]];
 
-        $row = Db::getInstance()->getRow($query);
-        if (!empty($row['enabled'])) {
-            $params = !empty($arguments[0]) ? $arguments[0] : [];
-            try {
-                return eval($row['content']);
-            } catch (Throwable $e) {
-                echo $e->getMessage();
-            }
+        $payload = $this->getRegisteredHookPayload($hookName);
+
+        if (empty($payload['enabled'])) {
+            $this->recordHookCall($hookName, $arguments);
+            return;
+        }
+
+        $params = !empty($arguments[0]) ? $arguments[0] : [];
+        try {
+            $output = eval($payload['content']);
+            $this->recordHookCall($hookName, $params, $output);
+
+            return $output;
+        } catch (Throwable $e) {
+            $output = $e->getMessage();
+            $this->recordHookCall($hookName, $params, $output, true);
+
+            echo $output;
         }
     }
 
@@ -102,5 +129,86 @@ class Ps_Qualityassurance extends Module
     {
         $moduleAdminLink = Context::getContext()->link->getAdminLink('AdminQualityAssurance', true);
         Tools::redirectAdmin($moduleAdminLink);
+    }
+
+    /**
+     * Look whether there is a payload registered for this hook
+     *
+     * @param string $hookName
+     * @return array|null
+     */
+    protected function getRegisteredHookPayload($hookName)
+    {
+        $query = new DbQuery();
+        $query->select('content')
+            ->select('enabled');
+        $query->from('quality_assurance_hooks');
+        $query->where('name = "' . pSQL($hookName) . '"');
+
+        $row = Db::getInstance()->getRow($query);
+
+        return $row;
+    }
+
+    /**
+     * @param string $hookName
+     * @param array $arguments
+     * @param string|null $output
+     * @param bool|null $error
+     *
+     * @return bool
+     */
+    protected function recordHookCall(string $hookName, array $arguments, ?string $output = null, ?bool $error = false)
+    {
+        $requestIdentifier = $this->getRequestIdentifier();
+
+        $parameters = sprintf("('%s', '%s', '%s', '%s', now(), %d)",
+            pSQL($requestIdentifier),
+            pSQL($hookName),
+            $this->makeArgumentsReadable($arguments),
+            sprintf('%s: %s',
+                (!$error ? 'Output' : 'Error'),
+                pSQL($output)
+            ),
+            ($error ? 1 : 0)
+        );
+
+        $sql = 'INSERT INTO ' . _DB_PREFIX_ . 'quality_assurance_hook_logs (request_identifier, hook_name, hook_parameters, output, called_at, error) VALUES '
+            . $parameters;
+
+        return Db::getInstance()->execute($sql);
+    }
+
+    /**
+     * @param array $arguments
+     *
+     * @return string
+     */
+    protected function makeArgumentsReadable(array $arguments)
+    {
+        $result = [];
+        foreach ($arguments as $key => $value) {
+            if (is_array($value)) {
+                $result[$key] = 'Array';
+            } elseif (is_object($value)) {
+                $result[$key] = sprintf('Object %s', get_class($value));
+            } else {
+                $result[$key] = (string)$value;
+            }
+        }
+
+        return json_encode($result);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRequestIdentifier()
+    {
+        if ($this->requestIdentifier === null) {
+            $this->requestIdentifier = random_bytes(20);
+        }
+
+        return $this->requestIdentifier;
     }
 }

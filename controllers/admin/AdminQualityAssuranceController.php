@@ -49,6 +49,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
                     'registeredHooks' => $this->generateAjaxUrl('GetRegisteredHooks'),
                     'update' => $this->generateAjaxUrl('UpdateHook'),
                     'toggleHookStatus' => $this->generateAjaxUrl('ToggleHookStatus'),
+                    'logs' => $this->generateAjaxUrl('GetHookCallLogs'),
                 ],
             ],
         ]);
@@ -171,6 +172,28 @@ class AdminQualityAssuranceController extends ModuleAdminController
             'id = ' . $hookId
         );
         $this->renderJson([]);
+    }
+
+    public function ajaxProcessGetHookCallLogs()
+    {
+        $query = new DbQuery();
+        $query->select('*');
+        $query->from('quality_assurance_hook_logs');
+        $query->orderBy('id DESC');
+        $query->limit(200);
+
+        $logs = Db::getInstance()->executeS($query);
+
+        $grouped = [];
+        foreach ($logs as $log) {
+            $requestIdentifier = $log['request_identifier'];
+            if (!isset($grouped[$requestIdentifier])) {
+                $grouped[$requestIdentifier] = [];
+            }
+            $grouped[$requestIdentifier][] = $log;
+        }
+
+        $this->renderJson($grouped);
     }
 
     private function generateAjaxUrl($action)
