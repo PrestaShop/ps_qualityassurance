@@ -56,7 +56,7 @@
               type="button"
               class="btn btn-link"
               :class="{'text-danger': !isEnabled(hook), 'text-success': isEnabled(hook)}"
-              @click.prevent="toogleHookStatus(hook.id)"
+              @click.prevent="toggleHookStatus(hook.id)"
             >
               <i
                 class="material-icons"
@@ -150,8 +150,8 @@
           this.closeModal();
         });
       },
-      toogleHookStatus(hookId) {
-        api.toogleHookStatus(hookId).then(() => {
+      toggleHookStatus(hookId) {
+        api.toggleHookStatus(hookId).then(() => {
           this.refreshHooks();
         });
       },

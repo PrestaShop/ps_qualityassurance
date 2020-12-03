@@ -48,7 +48,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
                     'register' => $this->generateAjaxUrl('RegisterHook'),
                     'registeredHooks' => $this->generateAjaxUrl('GetRegisteredHooks'),
                     'update' => $this->generateAjaxUrl('UpdateHook'),
-                    'toogleHookStatus' => $this->generateAjaxUrl('ToogleHookStatus'),
+                    'toggleHookStatus' => $this->generateAjaxUrl('ToggleHookStatus'),
                 ],
             ],
         ]);
@@ -150,7 +150,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
         $this->renderJson([]);
     }
 
-    public function ajaxProcessToogleHookStatus()
+    public function ajaxProcessToggleHookStatus()
     {
         $hookId = (int) Tools::getValue('hookId');
 
