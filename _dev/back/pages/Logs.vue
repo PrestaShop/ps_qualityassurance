@@ -40,9 +40,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="log in logs"
-        :key="log.id"
-        :class="{ 'table-danger': (log.error === '1') }">
+        <tr 
+          v-for="log in logs"
+          :key="log.id"
+          :class="{ 'table-danger': (log.error === '1') }"
+        >
           <th scope="row">{{ log.id }}</th>
           <td>{{ log.hook_name }}</td>
           <td>{{ log.hook_parameters }}</td>
