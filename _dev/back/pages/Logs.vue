@@ -24,7 +24,7 @@
  *-->
 <template>
   <div class="panel">
-    <table 
+    <table
       class="table table-striped"
       v-for="(logs, requestIdentifier) in logsGroupedByRequest"
       :key="requestIdentifier"
@@ -40,7 +40,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr 
+        <tr
           v-for="log in logs"
           :key="log.id"
           :class="{ 'table-danger': (log.error === '1') }"
