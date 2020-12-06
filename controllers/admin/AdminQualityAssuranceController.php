@@ -50,6 +50,8 @@ class AdminQualityAssuranceController extends ModuleAdminController
                     'update' => $this->generateAjaxUrl('UpdateHook'),
                     'toggleHookStatus' => $this->generateAjaxUrl('ToggleHookStatus'),
                     'logs' => $this->generateAjaxUrl('GetHookCallLogs'),
+                    'jsEventListenerStatus' => $this->generateAjaxUrl('GetJSEventListenerStatus'),
+                    'toggleJSEventListener' => $this->generateAjaxUrl('ToggleJSEventListener'),
                 ],
             ],
         ]);
@@ -101,6 +103,11 @@ class AdminQualityAssuranceController extends ModuleAdminController
     public function ajaxProcessGetHooks()
     {
         $this->renderJson(Hook::getHooks());
+    }
+
+    public function ajaxProcessGetJSEventListenerStatus()
+    {
+        $this->renderJson((bool) Configuration::get('PS_QA_MODULE_LISTEN_JS'));
     }
 
     public function ajaxProcessGetRegisteredHooks()
@@ -195,6 +202,14 @@ class AdminQualityAssuranceController extends ModuleAdminController
         }
 
         $this->renderJson($grouped);
+    }
+
+    public function ajaxProcessToggleJSEventListener()
+    {
+        $oldStatus = Configuration::get('PS_QA_MODULE_LISTEN_JS');
+        $result = Configuration::updateValue('PS_QA_MODULE_LISTEN_JS', ($oldStatus ? 0 : 1));
+        
+        $this->renderJson($result);
     }
 
     private function generateAjaxUrl($action)

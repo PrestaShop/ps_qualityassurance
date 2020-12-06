@@ -75,6 +75,12 @@ const api = {
   getHookCallLogs() {
     return makeGetRequest(urls.logs);
   },
+  refreshJSEventListenerStatus() {
+    return makeGetRequest(urls.jsEventListenerStatus);
+  },
+  toggleJSEventListener() {
+    return makePostRequest(urls.toggleJSEventListener, {});
+  },
 };
 
 export default api;

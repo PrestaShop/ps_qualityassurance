@@ -24,6 +24,35 @@
  *-->
 <template>
   <div class="panel">
+    <div class="panel-buttons">
+      <button
+        type="button"
+        class="btn btn-primary"
+        @click.prevent="refreshLogs()"
+      >
+        REFRESH LOGS
+        <i class="material-icons">refresh</i>
+      </button>
+
+      <button
+        class="btn"
+        :class="{'btn-success': !isJSEventListenerIsEnabled(), 'btn-warning': isJSEventListenerIsEnabled()}"
+        @click.prevent="toggleJSEventListener()"
+      >
+        <template v-if="isJSEventListenerIsEnabled()">
+          Disable JS Events Listener
+        </template>
+        <template v-else>
+          Enable JS Events Listener
+        </template>
+      </button>
+    </div>
+
+    <div class="alert alert-warning" role="alert">
+      Module PS Quality Assurance is hooked on hook 'displayTop' (alias 'header')
+      so the logs related to this hook are not displayed here.
+    </div>
+
     <table
       class="table table-striped"
       v-for="(logs, requestIdentifier) in logsGroupedByRequest"
@@ -73,17 +102,32 @@
     name: 'Logs',
     data() {
       return {
+        jsEventListenerIsEnabled: false,
         logsGroupedByRequest: [],
       };
     },
     mounted() {
       this.refreshLogs();
+      this.refreshJSEventListenerStatus();
     },
     methods: {
       refreshLogs() {
         api.getHookCallLogs().then((res) => {
           this.logsGroupedByRequest = res.data;
         });
+      },
+      refreshJSEventListenerStatus() {
+        api.refreshJSEventListenerStatus().then((res) => {
+          this.jsEventListenerIsEnabled = res.data;
+        });
+      },
+      toggleJSEventListener() {
+        api.toggleJSEventListener().then(() => {
+          this.refreshJSEventListenerStatus();
+        });
+      },
+      isJSEventListenerIsEnabled() {
+        return this.jsEventListenerIsEnabled;
       },
     },
   };

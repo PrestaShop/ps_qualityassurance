@@ -89,7 +89,10 @@ class Ps_Qualityassurance extends Module
 
         return Db::getInstance()->execute($createHookTableQuery)
             && Db::getInstance()->execute($createHookLogsQuery)
-            && parent::install();
+            && parent::install()
+            && $this->registerHook('header')
+            && $this->registerHook('displayTop')
+            && Configuration::updateValue('PS_QA_MODULE_LISTEN_JS', 0);
     }
 
     /**
@@ -100,6 +103,12 @@ class Ps_Qualityassurance extends Module
      */
     public function __call($methodName, array $arguments)
     {
+        if (in_array($methodName, ['hookHeader', 'hookDisplayTop'])) {
+            // ps_qualityassurance hooks itself to listen to JS events
+            // so these hook calls must not be recorded
+            return;
+        }
+
         $hookName = preg_replace('~^hook~', '', $methodName);
 
         $payload = $this->getRegisteredHookPayload($hookName);
@@ -122,6 +131,19 @@ class Ps_Qualityassurance extends Module
 
             echo $output;
         }
+    }
+
+    public function hookHeader()
+    {
+        if ($this->jsEventListenerIsEnabled()) {
+            $this->context->controller->registerJavascript(
+                'modules-qualityassurance',
+                'modules/' . $this->name . '/views/js/ps_event_listener.js',
+                ['position' => 'bottom', 'priority' => 150]
+            );
+        }
+
+        return '';
     }
 
     public function getContent()
@@ -210,5 +232,13 @@ class Ps_Qualityassurance extends Module
         }
 
         return $this->requestIdentifier;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function jsEventListenerIsEnabled()
+    {
+        return (bool) Configuration::get('PS_QA_MODULE_LISTEN_JS');
     }
 }
