@@ -22,6 +22,7 @@ import Router from 'vue-router';
 import Index from '@/pages/Index';
 import Register from '@/pages/Register';
 import View from '@/pages/View';
+import Logs from '@/pages/Logs';
 
 Vue.use(Router);
 
@@ -38,6 +39,10 @@ const router = new Router({
     {
       path: '/view',
       component: View,
+    },
+    {
+      path: '/logs',
+      component: Logs,
     },
   ],
 });

@@ -37,6 +37,15 @@
           Register hook
         </router-link>
       </li>
+      <li class="nav-item">
+        <router-link
+          to="/logs"
+          class="nav-link"
+          active-class="active"
+        >
+          Hook call logs
+        </router-link>
+      </li>
     </ul>
 
     <router-view />

@@ -72,6 +72,9 @@ const api = {
   getRegisteredHooks() {
     return makeGetRequest(urls.registeredHooks);
   },
+  getHookCallLogs() {
+    return makeGetRequest(urls.logs);
+  },
 };
 
 export default api;
