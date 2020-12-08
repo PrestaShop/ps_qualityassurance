@@ -1,0 +1,22 @@
+name: PHP tests
+on: [push, pull_request]
+jobs:
+  build:
+    strategy:
+      matrix:
+        php-versions: ['5.6', '7.1', '7.2','7.4']
+    runs-on: ubuntu-latest
+    name: PHP Syntax and PHP CS Fixer
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv, ext-zip
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
+
+      - run: composer install
+      - run: bash -c '! (find . -name "*.php" ! -path "./vendor/*" -print0 | xargs -0 -n1 -P4 php -l | grep "Parse error")'
+      - run: composer run lint

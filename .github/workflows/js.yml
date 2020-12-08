@@ -1,0 +1,19 @@
+name: JS tests
+on: [push, pull_request]
+jobs:
+  build:
+    strategy:
+      matrix:
+        node-versions: ['9', '10', '12']
+    runs-on: ubuntu-latest
+    name: JS Lint
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-versions }}
+
+      - run: npm install && npm run lint
