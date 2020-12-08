@@ -36,10 +36,10 @@
 
       <button
         class="btn"
-        :class="{'btn-success': !isJSEventListenerIsEnabled(), 'btn-warning': isJSEventListenerIsEnabled()}"
+        :class="{'btn-success': !jsEventListenerIsEnabled, 'btn-warning': jsEventListenerIsEnabled}"
         @click.prevent="toggleJSEventListener()"
       >
-        <template v-if="isJSEventListenerIsEnabled()">
+        <template v-if="jsEventListenerIsEnabled">
           Disable JS Events Listener
         </template>
         <template v-else>
@@ -125,9 +125,6 @@
         api.toggleJSEventListener().then(() => {
           this.refreshJSEventListenerStatus();
         });
-      },
-      isJSEventListenerIsEnabled() {
-        return this.jsEventListenerIsEnabled;
       },
     },
   };
