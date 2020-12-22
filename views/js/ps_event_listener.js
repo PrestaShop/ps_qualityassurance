@@ -42,14 +42,17 @@ const allPrestaShopJSEvents = [
 ];
 
 $(document).ready(function () {
+
   allPrestaShopJSEvents.forEach(function(eventName) {
-    const listenerParameters = '&fc=module&module=ps_qualityassurance&controller=listener&action=RecordJSHookExecution';
+    const listenerParameters = '&fc=module&module=ps_qualityassurance&controller=listener&action=RecordJSHookExecution&ajax=true';
 
     prestashop.on(eventName, function(event) {
-      let xhr = new XMLHttpRequest();
-      xhr.open('POST', '/');
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.send(encodeURI('name='+eventName+listenerParameters));
+      $.post({
+        url: '/?name='+eventName+listenerParameters,
+        data: '',
+        dataType: 'json',
+        cache: false,
+      });
     });
-  })
+  });
 });

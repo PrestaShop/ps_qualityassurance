@@ -207,8 +207,8 @@ class AdminQualityAssuranceController extends ModuleAdminController
     public function ajaxProcessToggleJSEventListener()
     {
         $oldStatus = Configuration::get('PS_QA_MODULE_LISTEN_JS');
-        $result = Configuration::updateValue('PS_QA_MODULE_LISTEN_JS', ($oldStatus ? 0 : 1));
-        
+        $result = Configuration::updateValue('PS_QA_MODULE_LISTEN_JS', (bool) $oldStatus);
+
         $this->renderJson($result);
     }
 

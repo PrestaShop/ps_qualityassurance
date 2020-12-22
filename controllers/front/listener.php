@@ -17,9 +17,9 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  */
-class ps_qualityassurancelistenerModuleFrontController extends ModuleFrontController
+class Ps_QualityAssuranceListenerModuleFrontController extends ModuleFrontController
 {
-    public function display()
+    public function postProcess()
     {
         if (!$this->jsEventListenerIsEnabled()) {
             return;
@@ -35,13 +35,13 @@ class ps_qualityassurancelistenerModuleFrontController extends ModuleFrontContro
     public function processRecordJSHookExecution()
     {
         $hookName = (string) Tools::getValue('name');
+        $hookParameters = Tools::getValue('parameters');
+        if (is_array($hookParameters)) {
+            $hookParameters = json_encode($hookParameters);
+        }
 
         if (!$hookName) {
-            $this->ajaxRender(
-                'Missing hook name',
-                get_class($this),
-                'ajaxProcessRecordJSHookExecution'
-            );
+            $this->renderJson(['error' => 'Missing hook name']);
             die();
         }
 
@@ -50,7 +50,7 @@ class ps_qualityassurancelistenerModuleFrontController extends ModuleFrontContro
             [
                 'request_identifier' => uniqid(),
                 'hook_name' => 'JS Event - ' . pSQL($hookName),
-                'hook_parameters' => pSQL(Tools::getValue('parameters'), true),
+                'hook_parameters' => pSQL($hookParameters, true),
                 'output' => '',
                 'called_at' => (new \DateTime())->format('Y-m-d H:i:s'),
                 'error' => 0,
@@ -65,5 +65,14 @@ class ps_qualityassurancelistenerModuleFrontController extends ModuleFrontContro
     protected function jsEventListenerIsEnabled()
     {
         return (bool) Configuration::get('PS_QA_MODULE_LISTEN_JS');
+    }
+
+    /**
+     * @param array $data
+     */
+    private function renderJson($data)
+    {
+        header('Content-Type: application/json');
+        $this->ajaxDie(json_encode($data));
     }
 }
