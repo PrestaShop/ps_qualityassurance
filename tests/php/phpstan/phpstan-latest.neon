@@ -1,0 +1,9 @@
+includes:
+	- %currentWorkingDirectory%/tests/php/phpstan/phpstan.neon
+
+parameters:
+  ignoreErrors:
+    # module specific
+    - '~^Access to an undefined property Ps_Qualityassurance::\$ajax\.$~'
+    - '~^Access to an undefined property Module::\$assetsPath\.$~'
+    - '~^Property ControllerCore::\$display_footer \(string\) does not accept false\.$~'
