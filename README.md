@@ -2,8 +2,8 @@
 
 [![PHP tests](https://github.com/matks/ps_qualityassurance/actions/workflows/php.yml/badge.svg)](https://github.com/matks/ps_qualityassurance/actions/workflows/php.yml)
 [![JS tests](https://github.com/matks/ps_qualityassurance/actions/workflows/js.yml/badge.svg)](https://github.com/matks/ps_qualityassurance/actions/workflows/js.yml)
-[![Latest Stable Version](https://poser.pugx.org/PrestaShop/ps_qualityassurance/v)](//packagist.org/packages/PrestaShop/ps_qualityassurance)
 [![Total Downloads](https://poser.pugx.org/PrestaShop/ps_qualityassurance/downloads)](//packagist.org/packages/PrestaShop/ps_qualityassurance)
+[![GitHub release](https://img.shields.io/github/v/release/prestashop/ps_qualityassurance)](https://github.com/PrestaShop/ps_qualityassurance)
 [![GitHub license](https://img.shields.io/github/license/PrestaShop/ps_qualityassurance)](https://github.com/PrestaShop/ps_qualityassurance/LICENSE.md)
 
 ## About
@@ -19,6 +19,9 @@ Install it, then use the new link in the menu "Quality Assurance" to reach the m
 From this page, you can
 - see configured hooks
 - register new hooks
+- see hook call logs
+
+Hook call logs are being stored inside SQL table `ps_quality_assurance_hook_logs`. If the table contains too much content, you must empty it.
 
 ## Requirements
 
@@ -48,7 +51,14 @@ npm run build # Build for production
 
 If you want to install it into your shop by using standard module upload process, you need to build a ZIP archive.
 
-Install npm and composer dependencies, then build the JavaScript assets for production. Then remove the unnecessary Javascript node_modules from the root folder, and build a ZIP archive from the folder.
+Install npm and composer dependencies, then build the JavaScript assets for production. Then remove the unnecessary folders:
+- `node_modules`
+- `tests`
+- `_dev`
+- `.github`
+- `.git`
+
+Finally build a ZIP archive from the folder.
 
 ## Contributing
 
