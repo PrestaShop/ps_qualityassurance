@@ -1,7 +1,7 @@
 # Quality Assurance module
 
-[![PHP tests](https://github.com/matks/ps_qualityassurance/actions/workflows/php.yml/badge.svg)](https://github.com/matks/ps_qualityassurance/actions/workflows/php.yml)
-[![JS tests](https://github.com/matks/ps_qualityassurance/actions/workflows/js.yml/badge.svg)](https://github.com/matks/ps_qualityassurance/actions/workflows/js.yml)
+[![PHP tests](https://github.com/PrestaShop/ps_qualityassurance/actions/workflows/php.yml/badge.svg)](https://github.com/PrestaShop/ps_qualityassurance/actions/workflows/php.yml)
+[![JS tests](https://github.com/PrestaShop/ps_qualityassurance/actions/workflows/js.yml/badge.svg)](https://github.com/PrestaShop/ps_qualityassurance/actions/workflows/js.yml)
 [![Total Downloads](https://poser.pugx.org/PrestaShop/ps_qualityassurance/downloads)](//packagist.org/packages/PrestaShop/ps_qualityassurance)
 [![GitHub release](https://img.shields.io/github/v/release/prestashop/ps_qualityassurance)](https://github.com/PrestaShop/ps_qualityassurance)
 [![GitHub license](https://img.shields.io/github/license/PrestaShop/ps_qualityassurance)](https://github.com/PrestaShop/ps_qualityassurance/LICENSE.md)
