@@ -117,6 +117,10 @@ class Ps_Qualityassurance extends Module
 
             return $output;
         } catch (Throwable $e) {
+            if ($e instanceof Exception) {
+                throw $e;
+            }
+
             $output = $e->getMessage();
             $this->recordHookCall($hookName, $params, $output, true);
 
