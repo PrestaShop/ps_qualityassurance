@@ -99,7 +99,7 @@
         if (item.name.startsWith('display')) {
           this.form.content = 'return \'<img src="\' . Tools::getAdminImageUrl(\'prestashop-avatar.png\') . \'" />\';';
         } else if (item.name.startsWith('action')) {
-          this.form.content = 'dump($params);';
+          this.form.content = 'return var_export($params, true);';
         }
       },
       getLabel(item) {
