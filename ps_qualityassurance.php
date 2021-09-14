@@ -120,7 +120,7 @@ class Ps_Qualityassurance extends Module
             $output = $e->getMessage();
             $this->recordHookCall($hookName, $params, $output, true);
 
-            echo $output;
+            throw $e;
         }
     }
 
