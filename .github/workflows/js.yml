@@ -4,7 +4,7 @@ jobs:
   build:
     strategy:
       matrix:
-        node-versions: ['9', '10', '12']
+        node-versions: ['14', '16']
     runs-on: ubuntu-latest
     name: JS Lint
     steps:
