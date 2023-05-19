@@ -57,11 +57,11 @@
 </template>
 
 <script>
-  import api from '@/lib/api';
-  import Alert from '@/components/Alert';
   import {createNamespacedHelpers} from 'vuex';
   import {VueSuggestion} from 'vue-suggestion';
   import {codemirror} from 'vue-codemirror';
+  import api from '@/lib/api';
+  import Alert from '@/components/Alert';
   import Suggestion from './Suggestion';
 
   const {mapGetters} = createNamespacedHelpers('hooks');

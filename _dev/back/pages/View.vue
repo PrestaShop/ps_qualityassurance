@@ -101,10 +101,10 @@
 </template>
 
 <script>
+  import {codemirror} from 'vue-codemirror';
   import api from '@/lib/api';
   import Alert from '@/components/Alert';
   import Modal from '@/components/Modal';
-  import {codemirror} from 'vue-codemirror';
 
   export default {
     name: 'View',
