@@ -51,7 +51,7 @@ class Ps_Qualityassurance extends Module
     {
         $this->name = 'ps_qualityassurance';
         $this->tab = 'administration';
-        $this->version = '1.1.1';
+        $this->version = '1.2.0';
         $this->author = 'PrestaShop';
         $this->bootstrap = true;
         $this->ajax = (bool) Tools::getValue('ajax');
