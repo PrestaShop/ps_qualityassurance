@@ -116,7 +116,7 @@
             this.message = res.data.error;
             this.messageType = 'danger';
           } else {
-            this.message = 'Successfuly saved!';
+            this.message = 'Successfully saved!';
             this.messageType = 'success';
             this.form.name = '';
             this.form.content = '';
