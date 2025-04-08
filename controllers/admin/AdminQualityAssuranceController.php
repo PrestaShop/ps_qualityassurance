@@ -213,6 +213,6 @@ class AdminQualityAssuranceController extends ModuleAdminController
     private function renderJson($data)
     {
         header('Content-Type: application/json');
-        die($this->ajaxRender(json_encode($data)));
+        exit($this->ajaxRender(json_encode($data)));
     }
 }
