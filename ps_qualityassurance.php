@@ -51,7 +51,7 @@ class Ps_Qualityassurance extends Module
     {
         $this->name = 'ps_qualityassurance';
         $this->tab = 'administration';
-        $this->version = '1.2.0';
+        $this->version = '2.0.0';
         $this->author = 'PrestaShop';
         $this->bootstrap = true;
         $this->ajax = (bool) Tools::getValue('ajax');
@@ -60,7 +60,7 @@ class Ps_Qualityassurance extends Module
 
         $this->displayName = $this->trans('Quality Assurance', [], 'Modules.Qualityassurance.Admin');
         $this->description = $this->trans('Helps you to test hooks.', [], 'Modules.Qualityassurance.Admin');
-        $this->ps_versions_compliancy = ['min' => '1.7.1.0', 'max' => _PS_VERSION_];
+        $this->ps_versions_compliancy = ['min' => '8.1.0', 'max' => '9.99.99'];
 
         $this->assetsPath = $this->_path . 'views/dist/';
     }
