@@ -63,7 +63,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
         );
     }
 
-    public function displayAjaxRegisterHook()
+    public function ajaxProcessRegisterHook()
     {
         $hookName = (string) Tools::getValue('name');
         if (empty($hookName) or !Validate::isHookName($hookName)) {
@@ -98,12 +98,12 @@ class AdminQualityAssuranceController extends ModuleAdminController
         $this->renderJson([]);
     }
 
-    public function displayAjaxGetHooks()
+    public function ajaxProcessGetHooks()
     {
         $this->renderJson(Hook::getHooks());
     }
 
-    public function displayAjaxGetRegisteredHooks()
+    public function ajaxProcessGetRegisteredHooks()
     {
         $query = new DbQuery();
         $query->select('*');
@@ -111,7 +111,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
         $this->renderJson(Db::getInstance()->executeS($query));
     }
 
-    public function displayAjaxDeleteHook()
+    public function ajaxProcessDeleteHook()
     {
         $hookId = (int) Tools::getValue('hookId');
 
@@ -128,7 +128,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
         $this->renderJson(Db::getInstance()->delete('quality_assurance_hooks', 'id = ' . $hookId));
     }
 
-    public function displayAjaxUpdateHook()
+    public function ajaxProcessUpdateHook()
     {
         $hookId = (int) Tools::getValue('hookId');
 
@@ -151,7 +151,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
         $this->renderJson([]);
     }
 
-    public function displayAjaxToggleHookStatus()
+    public function ajaxProcessToggleHookStatus()
     {
         $hookId = (int) Tools::getValue('hookId');
 
@@ -174,7 +174,7 @@ class AdminQualityAssuranceController extends ModuleAdminController
         $this->renderJson([]);
     }
 
-    public function displayAjaxGetHookCallLogs()
+    public function ajaxProcessGetHookCallLogs()
     {
         $query = new DbQuery();
         $query->select('*');
@@ -213,6 +213,6 @@ class AdminQualityAssuranceController extends ModuleAdminController
     private function renderJson($data)
     {
         header('Content-Type: application/json');
-        echo $this->ajaxRender(json_encode($data));
+        $this->ajaxRender(json_encode($data));
     }
 }
